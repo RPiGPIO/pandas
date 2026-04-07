@@ -7,43 +7,35 @@ use college
 # Shows current selected database
  db
 
-# Creates students collection automatically and inserts one document
  db.students.insertOne({
-   name: "Archit",
+   name: "XYZ",
    age: 21,
    city: "Mumbai"
  })
 
-# Inserts multiple student documents at once
  db.students.insertMany([
-   {name:"Archit", age:21, city:"Mumbai"},
-   {name:"Rchit", age:22, city:"Pune"},
+   {name:"XYZ", age:21, city:"Mumbai"},
+   {name:"XYZ", age:22, city:"Pune"},
    {name:"Peter", age:20, city:"Panvel"}
  ])
 
 
-# Displays all records from students collection
  db.students.find()
 
-# Pretty format for readable output
  db.students.find().pretty()
 
 
-# Finds student by exact name
- db.students.find({name:"Archit"})
+ db.students.find({name:"XYZ"})
 
-# Finds students with age greater than 20
  db.students.find({age: {$gt: 20}})
 
-# Finds students with age less than 22
  db.students.find({age: {$lt: 22}})
 
-# Finds students with age not equal to 21
  db.students.find({age: {$ne: 21}})
 
-# Updates city of Archit
+# Updates city of XYZ
  db.students.updateOne(
-   {name:"Archit"},
+   {name:"XYZ"},
    {$set:{city:"Navi Mumbai"}}
  )
 
@@ -92,8 +84,8 @@ use college
 
 # Student management example collection
  db.studentdata.insertMany([
-   {student_id:2001, student_name:"Archit", marks:90},
-   {student_id:2002, student_name:"Yash", marks:85},
+   {student_id:2001, student_name:"XYZ", marks:90},
+   {student_id:2002, student_name:"ABC", marks:85},
    {student_id:2003, student_name:"Peter", marks:88}
  ])
 
@@ -118,8 +110,8 @@ use college
 
 #Case study
 db.studentdata.insertMany([
- {student_id:1, name:"Archit", marks:90, city:"Mumbai"},
- {student_id:2, name:"Yash", marks:85, city:"Pune"},
+ {student_id:1, name:"ABC", marks:90, city:"Mumbai"},
+ {student_id:2, name:"XYZ", marks:85, city:"Pune"},
  {student_id:3, name:"Peter", marks:95, city:"Mumbai"},
  {student_id:4, name:"MJ", marks:70, city:"Pune"}
 ])
