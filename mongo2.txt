@@ -1,0 +1,114 @@
+# Student management example collection
+ db.studentdata.insertMany([
+   {student_id:2001, student_name:"Archit", marks:90},
+   {student_id:2002, student_name:"Yash", marks:85},
+   {student_id:2003, student_name:"Peter", marks:88}
+ ])
+
+# Show all student case study data
+ db.studentdata.find().pretty()
+
+# Sort marks descending
+ db.studentdata.find().sort({marks:-1})
+
+# Show top 2 students
+ db.studentdata.find().sort({marks:-1}).limit(2)
+
+# Update marks
+ db.studentdata.updateOne(
+   {student_id:2002},
+   {$set:{marks:95}}
+ )
+
+# Delete one student
+ db.studentdata.deleteOne({student_id:2003})
+
+
+#Case study
+db.studentdata.insertMany([
+ {student_id:1, name:"Archit", marks:90, city:"Mumbai"},
+ {student_id:2, name:"Yash", marks:85, city:"Pune"},
+ {student_id:3, name:"Peter", marks:95, city:"Mumbai"},
+ {student_id:4, name:"MJ", marks:70, city:"Pune"}
+])
+
+
+#Number of students
+db.studentdata.countDocuments()
+
+#Average marks
+db.studentdata.aggregate([
+  {
+    $group: {
+      _id: null,
+      avg_marks: {$avg: "$marks"}
+    }
+  }
+])
+
+#Maximum marks
+db.studentdata.aggregate([
+  {
+    $group: {
+      _id: null,
+      highest_marks: {$max: "$marks"}
+    }
+  }
+])
+
+
+#Minimum marks
+db.studentdata.aggregate([
+  {
+    $group: {
+      _id: null,
+      lowest_marks: {$min: "$marks"}
+    }
+  }
+])
+
+
+#Total Marks
+db.studentdata.aggregate([
+  {
+    $group: {
+      _id: null,
+      total_marks: {$sum: "$marks"}
+    }
+  }
+])
+
+
+#City Wise count
+db.studentdata.aggregate([
+  {
+    $group: {
+      _id: "$city",
+      total_students: {$sum: 1}
+    }
+  }
+])
+
+ #CITY-WISE AVERAGE MARKS
+db.studentdata.aggregate([
+  {
+    $group: {
+      _id: "$city",
+      avg_marks: {$avg: "$marks"}
+    }
+  }
+])
+
+#TOPPER STUDENT
+db.studentdata.find().sort({marks:-1}).limit(1)
+
+
+#STUDENTS ABOVE AVERAGE
+db.studentdata.find({marks: {$gt: 80}})
+
+#Sort city wise
+db.studentdata.aggregate([
+  {$group: {_id:"$city", total:{$sum:1}}},
+  {$sort: {total:-1}}
+])
+

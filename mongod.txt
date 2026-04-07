@@ -1,0 +1,206 @@
+# Shows all existing databases
+show dbs
+
+# Creates a new database named college or switches to it
+use college
+
+# Shows current selected database
+ db
+
+# Creates students collection automatically and inserts one document
+ db.students.insertOne({
+   name: "Archit",
+   age: 21,
+   city: "Mumbai"
+ })
+
+# Inserts multiple student documents at once
+ db.students.insertMany([
+   {name:"Archit", age:21, city:"Mumbai"},
+   {name:"Rchit", age:22, city:"Pune"},
+   {name:"Peter", age:20, city:"Panvel"}
+ ])
+
+
+# Displays all records from students collection
+ db.students.find()
+
+# Pretty format for readable output
+ db.students.find().pretty()
+
+
+# Finds student by exact name
+ db.students.find({name:"Archit"})
+
+# Finds students with age greater than 20
+ db.students.find({age: {$gt: 20}})
+
+# Finds students with age less than 22
+ db.students.find({age: {$lt: 22}})
+
+# Finds students with age not equal to 21
+ db.students.find({age: {$ne: 21}})
+
+# Updates city of Archit
+ db.students.updateOne(
+   {name:"Archit"},
+   {$set:{city:"Navi Mumbai"}}
+ )
+
+# Updates multiple documents where age > 20
+ db.students.updateMany(
+   {age: {$gt: 20}},
+   {$set:{status:"Active"}}
+ )
+
+# Deletes one matching document
+ db.students.deleteOne({name:"Peter"})
+
+# Deletes all students with age below 21
+ db.students.deleteMany({age: {$lt: 21}})
+
+# Sorts by age ascending
+ db.students.find().sort({age:1})
+
+# Sorts by age descending
+ db.students.find().sort({age:-1})
+
+
+# Shows only first 2 documents
+ db.students.find().limit(2)
+
+
+# Skips first document and shows remaining
+ db.students.find().skip(1)
+
+
+# Shows only name and city, hides _id
+ db.students.find({}, {name:1, city:1, _id:0})
+
+# Creates index on name field for faster search
+ db.students.createIndex({name:1})
+
+# Shows all indexes
+ db.students.getIndexes()
+
+# Deletes complete students collection
+ db.students.drop()
+
+
+# Deletes current database completely
+ db.dropDatabase()
+
+# Student management example collection
+ db.studentdata.insertMany([
+   {student_id:2001, student_name:"Archit", marks:90},
+   {student_id:2002, student_name:"Yash", marks:85},
+   {student_id:2003, student_name:"Peter", marks:88}
+ ])
+
+# Show all student case study data
+ db.studentdata.find().pretty()
+
+# Sort marks descending
+ db.studentdata.find().sort({marks:-1})
+
+# Show top 2 students
+ db.studentdata.find().sort({marks:-1}).limit(2)
+
+# Update marks
+ db.studentdata.updateOne(
+   {student_id:2002},
+   {$set:{marks:95}}
+ )
+
+# Delete one student
+ db.studentdata.deleteOne({student_id:2003})
+
+
+#Case study
+db.studentdata.insertMany([
+ {student_id:1, name:"Archit", marks:90, city:"Mumbai"},
+ {student_id:2, name:"Yash", marks:85, city:"Pune"},
+ {student_id:3, name:"Peter", marks:95, city:"Mumbai"},
+ {student_id:4, name:"MJ", marks:70, city:"Pune"}
+])
+
+
+#Number of students
+db.studentdata.countDocuments()
+
+#Average marks
+db.studentdata.aggregate([
+  {
+    $group: {
+      _id: null,
+      avg_marks: {$avg: "$marks"}
+    }
+  }
+])
+
+#Maximum marks
+db.studentdata.aggregate([
+  {
+    $group: {
+      _id: null,
+      highest_marks: {$max: "$marks"}
+    }
+  }
+])
+
+
+#Minimum marks
+db.studentdata.aggregate([
+  {
+    $group: {
+      _id: null,
+      lowest_marks: {$min: "$marks"}
+    }
+  }
+])
+
+
+#Total Marks
+db.studentdata.aggregate([
+  {
+    $group: {
+      _id: null,
+      total_marks: {$sum: "$marks"}
+    }
+  }
+])
+
+
+#City Wise count
+db.studentdata.aggregate([
+  {
+    $group: {
+      _id: "$city",
+      total_students: {$sum: 1}
+    }
+  }
+])
+
+ #CITY-WISE AVERAGE MARKS
+db.studentdata.aggregate([
+  {
+    $group: {
+      _id: "$city",
+      avg_marks: {$avg: "$marks"}
+    }
+  }
+])
+
+#TOPPER STUDENT
+db.studentdata.find().sort({marks:-1}).limit(1)
+
+
+#STUDENTS ABOVE AVERAGE
+db.studentdata.find({marks: {$gt: 80}})
+
+#Sort city wise
+db.studentdata.aggregate([
+  {$group: {_id:"$city", total:{$sum:1}}},
+  {$sort: {total:-1}}
+])
+

@@ -1,0 +1,48 @@
+# Shows only first 2 documents
+ db.students.find().limit(2)
+
+
+# Skips first document and shows remaining
+ db.students.find().skip(1)
+
+
+# Shows only name and city, hides _id
+ db.students.find({}, {name:1, city:1, _id:0})
+
+# Creates index on name field for faster search
+ db.students.createIndex({name:1})
+
+# Shows all indexes
+ db.students.getIndexes()
+
+# Deletes complete students collection
+ db.students.drop()
+
+
+# Deletes current database completely
+ db.dropDatabase()
+
+# Student management example collection
+ db.studentdata.insertMany([
+   {student_id:2001, student_name:"Archit", marks:90},
+   {student_id:2002, student_name:"Yash", marks:85},
+   {student_id:2003, student_name:"Peter", marks:88}
+ ])
+
+# Show all student case study data
+ db.studentdata.find().pretty()
+
+# Sort marks descending
+ db.studentdata.find().sort({marks:-1})
+
+# Show top 2 students
+ db.studentdata.find().sort({marks:-1}).limit(2)
+
+# Update marks
+ db.studentdata.updateOne(
+   {student_id:2002},
+   {$set:{marks:95}}
+ )
+
+# Delete one student
+ db.studentdata.deleteOne({student_id:2003})
