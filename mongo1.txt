@@ -1,3 +1,59 @@
+show dbs
+use college
+
+ db
+
+ db.students.insertOne({
+   name: "XYZ",
+   age: 21,
+   city: "Mumbai"
+ })
+
+ db.students.insertMany([
+   {name:"XYZ", age:21, city:"Mumbai"},
+   {name:"XYZ", age:22, city:"Pune"},
+   {name:"Peter", age:20, city:"Panvel"}
+ ])
+
+
+ db.students.find()
+
+ db.students.find().pretty()
+
+
+ db.students.find({name:"XYZ"})
+
+ db.students.find({age: {$gt: 20}})
+
+ db.students.find({age: {$lt: 22}})
+
+ db.students.find({age: {$ne: 21}})
+
+# Updates city of XYZ
+ db.students.updateOne(
+   {name:"XYZ"},
+   {$set:{city:"Navi Mumbai"}}
+ )
+
+# Updates multiple documents where age > 20
+ db.students.updateMany(
+   {age: {$gt: 20}},
+   {$set:{status:"Active"}}
+ )
+
+# Deletes one matching document
+ db.students.deleteOne({name:"Peter"})
+
+# Deletes all students with age below 21
+ db.students.deleteMany({age: {$lt: 21}})
+
+# Sorts by age ascending
+ db.students.find().sort({age:1})
+
+# Sorts by age descending
+ db.students.find().sort({age:-1})
+
+
 # Shows only first 2 documents
  db.students.find().limit(2)
 
@@ -24,8 +80,8 @@
 
 # Student management example collection
  db.studentdata.insertMany([
-   {student_id:2001, student_name:"Archit", marks:90},
-   {student_id:2002, student_name:"Yash", marks:85},
+   {student_id:2001, student_name:"XYZ", marks:90},
+   {student_id:2002, student_name:"ABC", marks:85},
    {student_id:2003, student_name:"Peter", marks:88}
  ])
 
